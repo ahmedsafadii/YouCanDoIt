@@ -3,9 +3,121 @@
     margin: 0;
 }
 
+@font-face {
+    font-family: 'Bold';
+    src: url('../fonts/rol.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'regular';
+    src: url('../fonts/ror.ttf') format('truetype');
+}
+
+html{
+    min-height:100%;/* make sure it is at least as tall as the viewport */
+    position:relative;
+}
 body{
-    background-color: #163346;
+    height:100%; /* force the BODY element to match the height of the HTML element */
+    background-color: #193447;
+    font-family: 'regular';
+    color:white;
 }
 .leftMenu{
     background-color: #0d1c26;
+    width: 155px;
+    height: 100%;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:hidden;
+    z-index:2;
+}
+
+.leftMenu ul {
+    list-style-type: none;
+}
+
+.leftMenu ul li {
+    color: white;
+    text-align: center;
+    padding-top:30px;
+    padding-bottom: 30px;
+}
+
+.leftMenu ul li:hover{
+    background-color: #2d3f4c;
+}
+
+.leftMenu ul li a{
+    text-decoration: none;
+    color:white;
+}
+
+.mainContent {
+    width: 580px;
+    height: 100%;
+    text-align: center;
+    float: none; 
+    font-size: 24px;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    color: #81d4fa;
+}
+
+.selectBox{
+    width: 580px;
+    height: 100%;
+    background-color: #ffffff;
+    float: none; 
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+.img-circle{
+    border-radius: 50%;
+}
+
+.titleSelect{
+  font-size: 18px;
+  text-align: left;
+  padding: 20px 20px 20px 20px;
+  font-family: 'regular';
+  color: rgb(102, 102, 102);
+}
+
+.boxSelect{
+   text-align: left;
+   padding: 0px 20px 20px 20px;
+}
+
+.clear{
+    clear: both;
+}
+
+.navbar-header{
+    background-color: #0d1c26;
+}
+
+a{
+    color:white;
+    text-decoration: none;
+}
+
+.navbar-header button{
+    background-color: white;
+}
+
+.icon-bar{
+    background-color:#0d1c26;
+}
+.container-fluid{
+background-color: #0d1c26;
+}
+.navbar .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+     background-color: #2d3f4c;
+    color: white;
 }

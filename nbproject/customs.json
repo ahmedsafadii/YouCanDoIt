@@ -1,0 +1,14 @@
+{
+    "elements": {
+        "a": {
+            "attributes": {
+                "href": {}
+            }
+        }
+    },
+    "attributes": {
+        "crossorigin": {
+            "context": "link"
+        }
+    }
+}
