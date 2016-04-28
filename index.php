@@ -89,7 +89,15 @@ and open the template in the editor.
           <div class="form-group" style="float:left;">
             <select title="Select Champion" name="id" data-live-search="true" data-size="5" data-width="540px" class="selectpicker">
             <option class="bs-title-option" value="">Select Champion</option>
-            <option label="1026" value="1026" data-content="<img class='img-circle' src='http://mqds.edu.ps/aparena/images/item/3003.png' width='20' height='20' alt='Europe Nordic & East' /> Europe Nordic & East"></option> 
+            <?php
+            $selectchampions = $con->query("SELECT * FROM `champions`");
+            foreach ($selectchampions as $key => $value){
+
+            ?>
+            <option label="<?php echo $value["champion_id"]; ?>" value="<?php echo $value["champion_id  "]; ?>" data-content="<img class='img-circle' src='img/champion/<?php echo $value["champion_name"]; ?>.png' width='20' height='20' alt='<?php echo $value["champion_name"]; ?>' /> <?php echo $value["champion_name"]; ?>"></option> 
+            <?php
+            }
+          ?>
             </select>
            </div>
            <div class="clear"></div>
