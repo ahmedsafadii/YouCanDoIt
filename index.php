@@ -132,3 +132,4 @@ and open the template in the editor.
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
  </body>
 
+
