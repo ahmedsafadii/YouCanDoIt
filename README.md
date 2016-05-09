@@ -12,7 +12,7 @@ This project is an entry for the [Riot Games API Challenge 3](https://developer.
 You can find a demo [here](http://wadymasr.com/YouCanDoIt/)
 or you can watch this video [here](https://www.youtube.com/watch?v=--K_mVtt0zg)
 
-I've played more than 1,000 games with Teemo,, I'm scared from this player, what should i do !! ,,  from here the idea has grow up , the project is that we provide you with experts palyers to evaluating the other players with the selected champion , according to statistics and official figures that provided from riot games company.
+I've played more than 1,000 games with Teemo,, I'm scared from this player, what should i do !! ,,  from here the idea has grow up , the project is that we provide you with experts players to evaluating the other players with the selected champion , according to statistics and official figures that provided from riot games company.
 
 Well what make this project is special that we give you the stats with intresting  way , it's like that we can make you feel that there is really someone talk to you :) ,, we are talking here about ( Artificial intelligence ) ... ^^" , the project it self can judge if this player is good with champion or not :/ << how you do that ,, more info in the Documentation file ,,
 
