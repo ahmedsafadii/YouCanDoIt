@@ -1,5 +1,9 @@
 <?php
+ob_start();
 session_start();
+if (isset($_GET['newsearch'])){
+  session_destroy();
+}
 // error_reporting(-1);
 require('connection.php');
 
@@ -9,7 +13,7 @@ $_SESSION['step1'] = uniqid();
 $_SESSION['step2'] = uniqid();
 $_SESSION['step3'] = uniqid();
 $_SESSION['current'] = $_SESSION['step1'];
-        
+$newornot = false;
 $noob = 0;
 $aggrisvi = 0;
 $save = 0;
@@ -37,9 +41,9 @@ and open the template in the editor.
   <div class="leftMenu hidden-xs hidden-sm">
     <ul>
       <li><img src="img/logo.png" alt="" /></li>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Expert Players</a></li>
-      <li><a href="#">About</a></li>
+          <li><a href="index.php">Home</a></li>
+          <li><a href="https://github.com/ahmedsafadii/YouCanDoIt/blob/master/README.md">How it works ?</a></li>
+          <li><a href="about.php">About</a></li>     
     </ul>
   </div>
 
@@ -156,6 +160,15 @@ and open the template in the editor.
             $responseData = json_decode($response, TRUE);
             foreach($responseData as $key => $value){
               $summonerid = $value["id"];
+              $selectedStatusx = $con->query("SELECT * FROM `statusPlayer` WHERE `player_id` = '$summonerid' and `champion_id` = '$summonerchampion' and `region_id` = '$summonerregion'");
+              $rowS = $selectedStatusx->fetch_assoc();
+              if ($rowS > 0){
+                $newornot = true;
+              }              $selectedStatus = $con->query("SELECT * FROM `searchedPlayer` WHERE `player_id` = '$summonerid' and `champion_id` = '$summonerchampion' and `region_id` = '$summonerregion'");
+              $rowST = $selectedStatus->fetch_assoc();
+              if ($rowST > 0){
+                $newornot = true;
+              }
               $_SESSION['name'] = $value["name"];
               $_SESSION['profileIconId'] = $value["profileIconId"];
             }
@@ -181,14 +194,24 @@ and open the template in the editor.
                             $ashivegrade = "";                        
                         }
                        $rank = intval($key + 1);
-
+                       if($newornot){
+                       $queryit = $con->query("UPDATE `searchedPlayer` SET `player_id`='$summonerid',`champion_id`='$summonerchampion',`region_id`='$summonerregion',`expert_id`='$expertplayer',`champion_grade`='$ashivegrade',`champion_points`='{$value['championPoints']}',`champion_box`='{$value['chestGranted']}',`champion_level`='{$value['championLevel']}',`champion_rank`='$rank',`champion_last_played`='{$value['lastPlayTime']}' WHERE id = '{$rowST['id']}'");
+                       }
+                       else{
                        $queryit = $con->query("INSERT INTO `searchedPlayer`(`player_id`, `champion_id`, `region_id`, `expert_id`, `champion_grade`, `champion_points`, `champion_box`, `champion_level`, `champion_rank`, `champion_last_played`) VALUES ('$summonerid','$summonerchampion','$summonerregion','$expertplayer','$ashivegrade','{$value['championPoints']}','{$value['chestGranted']}','{$value['championLevel']}','$rank','{$value['lastPlayTime']}')");
+                        }
                       }
                     }
                     foreach ($responsesPlayerStatus['champions'] as $key => $value) {
                       if ($value['id'] == $summonerchampion){
-                       $queryit2 = $con->query("INSERT INTO `statusPlayer`(`player_id`, `champion_id`, `region_id`,`match_played`, `match_win`, `match_lose`, `match_kills`, `match_farms`, `match_death`, `match_gold`, `match_assist`, `match_turret`, `match_pkill`, `match_qkill`, `match_tkill`, `match_dkill`) VALUES ('$summonerid','$summonerchampion','$summonerregion','{$value['stats']['totalSessionsPlayed']}','{$value['stats']['totalSessionsWon']}','{$value['stats']['totalSessionsLost']}','{$value['stats']['totalChampionKills']}','{$value['stats']['totalMinionKills']}','{$value['stats']['totalDeathsPerSession']}','{$value['stats']['totalGoldEarned']}','{$value['stats']['totalAssists']}','{$value['stats']['totalTurretsKilled']}','{$value['stats']['totalPentaKills']}','{$value['stats']['totalQuadraKills']}','{$value['stats']['totalTripleKills']}','{$value['stats']['totalDoubleKills']}')");
-                       var_dump($queryit2);                    
+                        if($newornot){
+
+                     $queryit2 = $con->query("UPDATE `statusPlayer` SET `match_played`='{$value['stats']['totalSessionsPlayed']}',`match_win`='{$value['stats']['totalSessionsWon']}',`match_lose`='{$value['stats']['totalSessionsLost']}',`match_kills`='{$value['stats']['totalChampionKills']}',`match_farms`='{$value['stats']['totalMinionKills']}',`match_death`='{$value['stats']['totalDeathsPerSession']}',`match_gold`='{$value['stats']['totalGoldEarned']}',`match_assist`='{$value['stats']['totalAssists']}',`match_turret`='{$value['stats']['totalTurretsKilled']}',`match_pkill`='{$value['stats']['totalPentaKills']}',`match_qkill`='{$value['stats']['totalQuadraKills']}',`match_tkill`='{$value['stats']['totalTripleKills']}',`match_dkill`='{$value['stats']['totalDoubleKills']}' WHERE id = '{$rowS['id']}'");
+
+                     }
+                     else{
+                      $queryit2 = $con->query("INSERT INTO `statusPlayer`(`player_id`, `champion_id`, `region_id`,`match_played`, `match_win`, `match_lose`, `match_kills`, `match_farms`, `match_death`, `match_gold`, `match_assist`, `match_turret`, `match_pkill`, `match_qkill`, `match_tkill`, `match_dkill`) VALUES ('$summonerid','$summonerchampion','$summonerregion','{$value['stats']['totalSessionsPlayed']}','{$value['stats']['totalSessionsWon']}','{$value['stats']['totalSessionsLost']}','{$value['stats']['totalChampionKills']}','{$value['stats']['totalMinionKills']}','{$value['stats']['totalDeathsPerSession']}','{$value['stats']['totalGoldEarned']}','{$value['stats']['totalAssists']}','{$value['stats']['totalTurretsKilled']}','{$value['stats']['totalPentaKills']}','{$value['stats']['totalQuadraKills']}','{$value['stats']['totalTripleKills']}','{$value['stats']['totalDoubleKills']}')");
+                     }
                      }
                      }
                      $_SESSION['expert'] = $expertplayer;
@@ -220,17 +243,17 @@ and open the template in the editor.
             <div class="form-group" style="float:left;">
               <select title="Select Region" name="summonerregion" data-live-search="true" data-size="5" data-width="200px" class="selectpicker">
                 <option class="bs-title-option" value="">Select Region</option>
-                <option label="re-na" value="na" data-content="<img class='img-circle' src='../img/regions/s6.png' width='20' height='20' alt='North America Region' /> North America"></option> 
-                <option label="re-euw" value="euw" data-content="<img class='img-circle' src='../img/regions/s2.png' width='20' height='20' alt='Europe West Region' /> Europe West"></option> 
-                <option label="re-eune" value="eune" data-content="<img class='img-circle' src='../img/regions/s3.png' width='20' height='20' alt='Europe Nordic & East Region' /> Europe Nordic & East"></option> 
-                <option label="re-kr" value="kr" data-content="<img class='img-circle' src='../img/regions/s5.png' width='20' height='20' alt='Korea Region' /> Korea"></option> 
-                <option label="re-oce" value="oce" data-content="<img class='img-circle' src='../img/regions/s9.png' width='20' height='20' alt='Oceania Region' /> Oceania"></option> 
-                <option label="re-jp" value="jp" data-content="<img class='img-circle' src='../img/regions/s4.png' width='20' height='20' alt='Japan Region' /> Japan"></option> 
-                <option label="re-br" value="br" data-content="<img class='img-circle' src='../img/regions/s1.png' width='20' height='20' alt='Brazil Region' /> Brazil"></option> 
-                <option label="re-las" value="las" data-content="<img class='img-circle' src='../img/regions/s7.png' width='20' height='20' alt='Latin America South Region' /> Latin America South"></option> 
-                <option label="re-lan" value="lan" data-content="<img class='img-circle' src='../img/regions/s8.png' width='20' height='20' alt='Latin America North Region' /> Latin America North"></option> 
-                <option label="re-ru" value="ru" data-content="<img class='img-circle' src='../img/regions/s10.png' width='20' height='20' alt='Russia Region' /> Russia"></option> 
-                <option label="re-tr" value="tr" data-content="<img class='img-circle' src='../img/regions/s11.png' width='20' height='20' alt='Turkey Region' /> Turkey"></option> 
+                <option label="re-na" value="na" data-content="<img class='img-circle' src='img/regions/s6.png' width='20' height='20' alt='North America Region' /> North America"></option> 
+                <option label="re-euw" value="euw" data-content="<img class='img-circle' src='img/regions/s2.png' width='20' height='20' alt='Europe West Region' /> Europe West"></option> 
+                <option label="re-eune" value="eune" data-content="<img class='img-circle' src='img/regions/s3.png' width='20' height='20' alt='Europe Nordic & East Region' /> Europe Nordic & East"></option> 
+                <option label="re-kr" value="kr" data-content="<img class='img-circle' src='img/regions/s5.png' width='20' height='20' alt='Korea Region' /> Korea"></option> 
+                <option label="re-oce" value="oce" data-content="<img class='img-circle' src='img/regions/s9.png' width='20' height='20' alt='Oceania Region' /> Oceania"></option> 
+                <option label="re-jp" value="jp" data-content="<img class='img-circle' src='img/regions/s4.png' width='20' height='20' alt='Japan Region' /> Japan"></option> 
+                <option label="re-br" value="br" data-content="<img class='img-circle' src='img/regions/s1.png' width='20' height='20' alt='Brazil Region' /> Brazil"></option> 
+                <option label="re-las" value="las" data-content="<img class='img-circle' src='img/regions/s7.png' width='20' height='20' alt='Latin America South Region' /> Latin America South"></option> 
+                <option label="re-lan" value="lan" data-content="<img class='img-circle' src='img/regions/s8.png' width='20' height='20' alt='Latin America North Region' /> Latin America North"></option> 
+                <option label="re-ru" value="ru" data-content="<img class='img-circle' src='img/regions/s10.png' width='20' height='20' alt='Russia Region' /> Russia"></option> 
+                <option label="re-tr" value="tr" data-content="<img class='img-circle' src='img/regions/s11.png' width='20' height='20' alt='Turkey Region' /> Turkey"></option> 
               </select>
             </div>
             <div class="clear"></div>
@@ -264,12 +287,12 @@ and open the template in the editor.
             <div class="form-group" style="float:left;">
               <select title="Select Language" name="language" data-live-search="true" data-size="5" data-width="200px" class="selectpicker">
                 <option class="bs-title-option" value="">Select Language</option>
-                <option label="la-en" value="en" data-content="<img class='img-circle' src='../img/lang/r-3.png' width='20' height='20' alt='English Language' /> English"></option> 
-                <option disabled label="la-ar" value="ar" data-content="<img class='img-circle' src='../img/lang/r-1.png' width='20' height='20' alt='Arabic Language' /> Arabic"></option> 
-                <option disabled label="la-sp" value="sp" data-content="<img class='img-circle' src='../img/lang/r-2.png' width='20' height='20' alt='Spain Language' /> Spain"></option> 
-                <option disabled label="la-fr" value="fr" data-content="<img class='img-circle' src='../img/lang/r-7.png' width='20' height='20' alt='France Language' /> France"></option> 
-                <option disabled label="la-ch" value="ch" data-content="<img class='img-circle' src='../img/lang/r-4.png' width='20' height='20' alt='China Language' /> China"></option> 
-                <option disabled label="la-ru" value="ru" data-content="<img class='img-circle' src='../img/lang/r-5.png' width='20' height='20' alt='Russia Language' /> Russia"></option> 
+                <option label="la-en" value="en" data-content="<img class='img-circle' src='img/lang/r-3.png' width='20' height='20' alt='English Language' /> English"></option> 
+                <option disabled label="la-ar" value="ar" data-content="<img class='img-circle' src='img/lang/r-1.png' width='20' height='20' alt='Arabic Language' /> Arabic"></option> 
+                <option disabled label="la-sp" value="sp" data-content="<img class='img-circle' src='img/lang/r-2.png' width='20' height='20' alt='Spain Language' /> Spain"></option> 
+                <option disabled label="la-fr" value="fr" data-content="<img class='img-circle' src='img/lang/r-7.png' width='20' height='20' alt='France Language' /> France"></option> 
+                <option disabled label="la-ch" value="ch" data-content="<img class='img-circle' src='img/lang/r-4.png' width='20' height='20' alt='China Language' /> China"></option> 
+                <option disabled label="la-ru" value="ru" data-content="<img class='img-circle' src='img/lang/r-5.png' width='20' height='20' alt='Russia Language' /> Russia"></option> 
               </select>
             </div>
             <?php echo $noob; ?>
@@ -300,5 +323,3 @@ and open the template in the editor.
     });
   </script>
 </body>
-
-
