@@ -7,7 +7,19 @@
     font-family: 'Bold';
     src: url('../fonts/rol.ttf') format('truetype');
 }
+.colorme a {
+color:red;
+}
 
+.colorme a:hover{
+color:black;
+}
+.colorme{
+  color: gray;
+      font-family: 'regular';
+text-align: center;
+  font-size: 15px;
+}
 @font-face {
     font-family: 'regular';
     src: url('../fonts/ror.ttf') format('truetype');
@@ -253,4 +265,233 @@ a{
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+.ranknumber {
+font-size: 45px;
+    font-family: 'regular';
+    color: rgb(255, 255, 255);
+    line-height: 0.353;
+    text-shadow: 0px 3px 0px rgba(201, 144, 52, 0.87);
+    -moz-transform: matrix( 0.87215481751262,0,0,0.87215481751262,0,0);
+    -webkit-transform: matrix( 0.87215481751262,0,0,0.87215481751262,0,0);
+    -ms-transform: matrix( 0.87215481751262,0,0,0.87215481751262,0,0);
+    position: absolute;
+    margin-left: 43px;
+    margin-top: 17px;
+    width: 75px;
+    text-align: center;
+}
+
+.sumoonerpoints {
+  font-size: 10px;
+  font-family: 'regular';
+  color: rgb(38, 37, 37);
+  line-height: 2.4;
+  -moz-transform: matrix( 1.09845248575168,0,0,1.09845248575168,0,0);
+  -webkit-transform: matrix( 1.09845248575168,0,0,1.09845248575168,0,0);
+  -ms-transform: matrix( 1.09845248575168,0,0,1.09845248575168,0,0);
+  position: absolute;
+  margin-left: 68px;
+  margin-top: 53px;
+  width: 25px;
+  text-align: center;
+}
+
+
+.summonerPphoho{
+  position: absolute;
+  margin-left: 133px;
+  margin-top: 7px;
+}
+
+
+.chmpstat{
+    font-family: 'regular';
+
+    position: absolute;
+    margin-left: 170px;
+    text-align: center;
+    width: 300px;
+    margin-top: 67px;
+    color: #333333;
+}
+.summonernamexxxxx{
+    font-family: 'regular';
+
+  position: absolute;
+  margin-left: 190px;
+  margin-top: 14px; 
+}
+
+.summonerserverxx{
+    font-family: 'regular';
+
+  position: absolute;
+  margin-left: 190px;
+  margin-top: 35px; 
+}
+
+.double{
+  font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+    margin-left: 485px;
+  margin-top: 183px; 
+}
+.triple{
+  font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+    margin-left: 480px;
+  margin-top: 152px;
+}
+.qudra{
+    font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+    margin-left: 488px;
+  margin-top: 122px;
+}
+.penta{
+    font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+  margin-left: 485px;
+  margin-top: 92px;
+}
+
+.tower{
+  font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+    margin-left: 330px;
+  margin-top: 182px; 
+}
+.golds{
+  font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+    margin-left: 325px;
+  margin-top: 152px;
+}
+.farms{
+    font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+    margin-left: 325px;
+  margin-top: 122px;
+}
+.kda{
+  font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+    margin-left: 307px;
+  margin-top: 92px;
+}
+
+
+
+.winrate{
+  font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+    margin-left: 205px;
+  margin-top: 182px; 
+}
+.lost{
+  font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+    margin-left: 185px;
+  margin-top: 152px;
+}
+.win{
+    font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+    margin-left: 185px;
+  margin-top: 122px;
+}
+.playedmatch{
+  font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+    margin-left: 200px;
+  margin-top: 92px;
+}
+
+.championgrade{
+    font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+  margin-left: 460px;
+  margin-top: 30px;
+}
+.championlevel{
+  font-size: 12px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+  margin-left: 465px;
+  margin-top: 11px;
+}
+.summonertypejugne{
+  font-size: 10px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+  margin-left: 50px;
+  width: 55px;
+  text-align: center;
+  margin-top: 93px;
+      -ms-transform: rotate(-20deg); /* IE 9 */
+    -webkit-transform: rotate(-20deg); /* Chrome, Safari, Opera */
+    transform: rotate(-20deg);
+}
+.summonertypejugnenumber{
+  font-size: 14px;
+  font-family: 'regular';
+  color: rgb(241, 241, 241);
+  line-height: 2;
+  position: absolute;
+  margin-left: 60px;
+  width: 55px;
+  text-align: center;
+  margin-top: 105px;
+      -ms-transform: rotate(-20deg); /* IE 9 */
+    -webkit-transform: rotate(-20deg); /* Chrome, Safari, Opera */
+    transform: rotate(-20deg);
+}
+
+.myimage{
+  position: absolute;
 }
