@@ -162,11 +162,11 @@ function farms_calculate($farm){
     $aggr = $aggr + 5;
     return "Perfect";
   }
-  else if ($farm > 100 && $farm < 179){
+  else if ($farm > 100 && $farm <= 179){
     $aggr = $aggr + 5;
     return "Normal";
   }
-  else if ($farm < 100){
+  else if ($farm <= 100){
     $aggr = $aggr + 5;
     return "Pretty Bad";
   }
@@ -183,11 +183,11 @@ function gold_calcualte($gold){
     $aggr = $aggr + 5;
     return "Perfect";
   }
-  else if ($gold < 10000 && $gold > 8000){
+  else if ($gold <= 10000 && $gold >= 8000){
     $save = $save + 5;
     return "Normal";
   }
-  else if ($gold < 8000){
+  else if ($gold <= 8000){
     $noob = $noob + 5;
     return "Pretty Bad";
   }
@@ -209,11 +209,11 @@ function tower_calcualte($tower){
     $aggr = $aggr + 5;
     return "Perfect";
   }
-  else if ($tower < 1.0 && $tower > 0.5){
+  else if ($tower < 1.0 && $tower >= 0.5){
     $save = $save + 5;
     return "Normal";
   }
-  else if ($tower < 0.5){
+  else if ($tower <= 0.5){
     $noob = $noob + 5;
     return "Pretty Bad";
   }
@@ -310,9 +310,9 @@ and open the template in the editor.
   <div class="leftMenu hidden-xs hidden-sm">
     <ul>
       <li><img src="img/logo.png" alt="" /></li>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Expert Players</a></li>
-      <li><a href="#">About</a></li>
+          <li><a href="index.php">Home</a></li>
+          <li><a href="https://github.com/ahmedsafadii/YouCanDoIt/blob/master/README.md">How it works ?</a></li>
+          <li><a href="about.php">About</a></li>   
     </ul>
   </div>
 
@@ -334,7 +334,7 @@ and open the template in the editor.
         <ul class="nav navbar-nav">
           <li><a href="index.php">Home</a></li>
           <li><a href="https://github.com/ahmedsafadii/YouCanDoIt/blob/master/README.md">How it works ?</a></li>
-          <li><a href="about.php">About</a></li>      
+          <li><a href="about.php">About</a></li>        
         </ul>
       </div>
       <!-- /.navbar-collapse -->
@@ -595,3 +595,5 @@ $(document).ready(function() {
 
   </script>
 </body>
+
+
