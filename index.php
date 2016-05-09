@@ -14,6 +14,7 @@ $_SESSION['step2'] = uniqid();
 $_SESSION['step3'] = uniqid();
 $_SESSION['current'] = $_SESSION['step1'];
 $newornot = false;
+$newornotx = false;
 $noob = 0;
 $aggrisvi = 0;
 $save = 0;
@@ -152,7 +153,7 @@ and open the template in the editor.
 
 
           // check if the summoner is exisist or not ?
-          $response = @file_get_contents('https://'.$summonerregion.'.api.pvp.net/api/lol/'.$summonerregion.'/v1.4/summoner/by-name/'.rawurlencode($summonername).'?api_key=b246e73f-6f17-4eb2-ad8d-6e4292a02875');
+          $response = @file_get_contents('https://'.$summonerregion.'.api.pvp.net/api/lol/'.$summonerregion.'/v1.4/summoner/by-name/'.rawurlencode($summonername).'?api_key=d7625f15-8f8d-48f8-850e-e687ee241f06');
           if($response === FALSE) { 
             echo "<div class=\"alert alert-danger\">Summoner not found on server $summonerregion.</div>";
           }
@@ -164,27 +165,28 @@ and open the template in the editor.
               $rowS = $selectedStatusx->fetch_assoc();
               if ($rowS > 0){
                 $newornot = true;
-              }              $selectedStatus = $con->query("SELECT * FROM `searchedPlayer` WHERE `player_id` = '$summonerid' and `champion_id` = '$summonerchampion' and `region_id` = '$summonerregion'");
+              }              
+$selectedStatus = $con->query("SELECT * FROM `searchedPlayer` WHERE `player_id` = '$summonerid' and `champion_id` = '$summonerchampion' and `region_id` = '$summonerregion'");
               $rowST = $selectedStatus->fetch_assoc();
               if ($rowST > 0){
-                $newornot = true;
+                $newornotx = true;
               }
               $_SESSION['name'] = $value["name"];
               $_SESSION['profileIconId'] = $value["profileIconId"];
             }
-            $response = file_get_contents('https://'.$summonerregion.'.api.pvp.net/api/lol/'.$summonerregion.'/v2.5/league/by-summoner/'.$summonerid.'?api_key=b246e73f-6f17-4eb2-ad8d-6e4292a02875');
+            $response = file_get_contents('https://'.$summonerregion.'.api.pvp.net/api/lol/'.$summonerregion.'/v2.5/league/by-summoner/'.$summonerid.'?api_key=d7625f15-8f8d-48f8-850e-e687ee241f06');
             if($response === FALSE) { 
               echo "<div class=\"alert alert-danger\">This Summoner is unranked.</div>";
             }
             else{
-              $response = file_get_contents('https://'.$summonerregion.'.api.pvp.net/api/lol/'.$summonerregion.'/v1.3/stats/by-summoner/'.$summonerid.'/ranked?season=SEASON2016&api_key=b246e73f-6f17-4eb2-ad8d-6e4292a02875');
+              $response = file_get_contents('https://'.$summonerregion.'.api.pvp.net/api/lol/'.$summonerregion.'/v1.3/stats/by-summoner/'.$summonerid.'/ranked?season=SEASON2016&api_key=d7625f15-8f8d-48f8-850e-e687ee241f06');
               $responseData = json_decode($response, TRUE);
               foreach($responseData['champions'] as $key => $value){
                 if ($value['id'] == $summonerchampion){
                   $nochmapion = false;
                   if($value['stats']['totalSessionsPlayed'] > 10){
-                    $responsesChampionMaystry = json_decode(file_get_contents('https://'.$summonerregion.'.api.pvp.net/championmastery/location/'.$re.'/player/'.$summonerid.'/champions?api_key=b246e73f-6f17-4eb2-ad8d-6e4292a02875'), TRUE);
-                    $responsesPlayerStatus = json_decode(file_get_contents('https://'.$summonerregion.'.api.pvp.net/api/lol/'.$summonerregion.'/v1.3/stats/by-summoner/'.$summonerid.'/ranked?season=SEASON2016&api_key=b246e73f-6f17-4eb2-ad8d-6e4292a02875'), TRUE);
+                    $responsesChampionMaystry = json_decode(file_get_contents('https://'.$summonerregion.'.api.pvp.net/championmastery/location/'.$re.'/player/'.$summonerid.'/champions?api_key=d7625f15-8f8d-48f8-850e-e687ee241f06'), TRUE);
+                    $responsesPlayerStatus = json_decode(file_get_contents('https://'.$summonerregion.'.api.pvp.net/api/lol/'.$summonerregion.'/v1.3/stats/by-summoner/'.$summonerid.'/ranked?season=SEASON2016&api_key=d7625f15-8f8d-48f8-850e-e687ee241f06'), TRUE);
                     foreach($responsesChampionMaystry as $key => $value){
                       if ($value['championId'] == $summonerchampion){
                         if (isset($value['highestGrade'])){
@@ -194,7 +196,7 @@ and open the template in the editor.
                             $ashivegrade = "";                        
                         }
                        $rank = intval($key + 1);
-                       if($newornot){
+                       if($newornotx){
                        $queryit = $con->query("UPDATE `searchedPlayer` SET `player_id`='$summonerid',`champion_id`='$summonerchampion',`region_id`='$summonerregion',`expert_id`='$expertplayer',`champion_grade`='$ashivegrade',`champion_points`='{$value['championPoints']}',`champion_box`='{$value['chestGranted']}',`champion_level`='{$value['championLevel']}',`champion_rank`='$rank',`champion_last_played`='{$value['lastPlayTime']}' WHERE id = '{$rowST['id']}'");
                        }
                        else{
