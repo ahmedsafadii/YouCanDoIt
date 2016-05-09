@@ -183,7 +183,6 @@ a{
 .chmapionbh{
     height: 115px;
     width: 100%;
-    background-image: url('http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Braum_0.jpg');
     background-repeat: no-repeat;
     background-position: 0% 30%;
     background-size: 580px 326px;
@@ -241,6 +240,17 @@ a{
   margin-left: 190px;
   text-align:center;
   padding-top: 10px;
-  margin-top: 30px;
+  margin-top: 10px;
   margin-bottom: 5px;
+}
+
+.bannar{
+  width: 550px;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 550px 220px,550px 220px;
+  height: 220px;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }

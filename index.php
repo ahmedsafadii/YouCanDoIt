@@ -2,6 +2,20 @@
 session_start();
 // error_reporting(-1);
 require('connection.php');
+
+// include('helper.php');
+
+$_SESSION['step1'] = uniqid();
+$_SESSION['step2'] = uniqid();
+$_SESSION['step3'] = uniqid();
+$_SESSION['current'] = $_SESSION['step1'];
+        
+$noob = 0;
+$aggrisvi = 0;
+$save = 0;
+
+
+
 ?>
 <!DOCTYPE html>
 <!--
@@ -77,36 +91,47 @@ and open the template in the editor.
           switch ($summonerregion) {
               case "na":
                   $re = "na1";
+                  $_SESSION['rank'] = "North America";
                   break;
               case "euw":
                   $re = "euw1";
+                  $_SESSION['rank'] = "Europe West";
                   break;
               case "eune":
                   $re = "eun1";
+                  $_SESSION['rank'] = "Europe Nordic & East";
                   break;
               case "br":
                   $re = "br1";
+                  $_SESSION['rank'] = "Brazil";
                   break;
               case "tr":
                   $re = "tr1";
+                  $_SESSION['rank'] = "Turkey";
                   break;
               case "ru":
                   $re = "ru";
+                  $_SESSION['rank'] = "Russia";
                   break;
               case "lan":
                   $re = "la1";
+                  $_SESSION['rank'] = "Latin America North";
                   break;
               case "las":
                   $re = "la2";
+                  $_SESSION['rank'] = "Latin America South";
                   break;
               case "oce":
                   $re = "oc1";
+                  $_SESSION['rank'] = "Oceania";
                   break;
               case "kr":
                   $re = "ru";
+                  $_SESSION['rank'] = "Russia";
                   break;
               case "jp":
                   $re = "jp1";
+                  $_SESSION['rank'] = "Japan";
                   break;
           }
 
@@ -114,6 +139,13 @@ and open the template in the editor.
           $summonerchampion = $_POST['summonerchampion'];
           $expertplayer = $_POST['expertplayer'];
           $selectedLanguage = $_POST['language'];
+
+          //   //$id = base64_decode($expertplayer);
+
+          // if(is_numeric($expertplayer)){
+          //   // check if this expert registerd with the database
+          // }
+
 
           // check if the summoner is exisist or not ?
           $response = @file_get_contents('https://'.$summonerregion.'.api.pvp.net/api/lol/'.$summonerregion.'/v1.4/summoner/by-name/'.rawurlencode($summonername).'?api_key=b246e73f-6f17-4eb2-ad8d-6e4292a02875');
@@ -124,6 +156,8 @@ and open the template in the editor.
             $responseData = json_decode($response, TRUE);
             foreach($responseData as $key => $value){
               $summonerid = $value["id"];
+              $_SESSION['name'] = $value["name"];
+              $_SESSION['profileIconId'] = $value["profileIconId"];
             }
             $response = file_get_contents('https://'.$summonerregion.'.api.pvp.net/api/lol/'.$summonerregion.'/v2.5/league/by-summoner/'.$summonerid.'?api_key=b246e73f-6f17-4eb2-ad8d-6e4292a02875');
             if($response === FALSE) { 
@@ -147,6 +181,7 @@ and open the template in the editor.
                             $ashivegrade = "";                        
                         }
                        $rank = intval($key + 1);
+
                        $queryit = $con->query("INSERT INTO `searchedPlayer`(`player_id`, `champion_id`, `region_id`, `expert_id`, `champion_grade`, `champion_points`, `champion_box`, `champion_level`, `champion_rank`, `champion_last_played`) VALUES ('$summonerid','$summonerchampion','$summonerregion','$expertplayer','$ashivegrade','{$value['championPoints']}','{$value['chestGranted']}','{$value['championLevel']}','$rank','{$value['lastPlayTime']}')");
                       }
                     }
@@ -160,7 +195,7 @@ and open the template in the editor.
                      $_SESSION['player'] = $summonerid;
                      $_SESSION['champion'] = $summonerchampion;
                      $_SESSION['region'] = $summonerregion;
-                     header('Location: show.php?step=1');
+                     header('Location: show.php?step='.$_SESSION['step1']);
                   }
                   else{
                     $noenoughmatch = true;
@@ -229,14 +264,15 @@ and open the template in the editor.
             <div class="form-group" style="float:left;">
               <select title="Select Language" name="language" data-live-search="true" data-size="5" data-width="200px" class="selectpicker">
                 <option class="bs-title-option" value="">Select Language</option>
-                <option label="la-ar" value="ar" data-content="<img class='img-circle' src='../img/lang/r-1.png' width='20' height='20' alt='Arabic Language' /> Arabic"></option> 
                 <option label="la-en" value="en" data-content="<img class='img-circle' src='../img/lang/r-3.png' width='20' height='20' alt='English Language' /> English"></option> 
-                <option label="la-sp" value="sp" data-content="<img class='img-circle' src='../img/lang/r-2.png' width='20' height='20' alt='Spain Language' /> Spain"></option> 
-                <option label="la-fr" value="fr" data-content="<img class='img-circle' src='../img/lang/r-7.png' width='20' height='20' alt='France Language' /> France"></option> 
-                <option label="la-ch" value="ch" data-content="<img class='img-circle' src='../img/lang/r-4.png' width='20' height='20' alt='China Language' /> China"></option> 
-                <option label="la-ru" value="ru" data-content="<img class='img-circle' src='../img/lang/r-5.png' width='20' height='20' alt='Russia Language' /> Russia"></option> 
+                <option disabled label="la-ar" value="ar" data-content="<img class='img-circle' src='../img/lang/r-1.png' width='20' height='20' alt='Arabic Language' /> Arabic"></option> 
+                <option disabled label="la-sp" value="sp" data-content="<img class='img-circle' src='../img/lang/r-2.png' width='20' height='20' alt='Spain Language' /> Spain"></option> 
+                <option disabled label="la-fr" value="fr" data-content="<img class='img-circle' src='../img/lang/r-7.png' width='20' height='20' alt='France Language' /> France"></option> 
+                <option disabled label="la-ch" value="ch" data-content="<img class='img-circle' src='../img/lang/r-4.png' width='20' height='20' alt='China Language' /> China"></option> 
+                <option disabled label="la-ru" value="ru" data-content="<img class='img-circle' src='../img/lang/r-5.png' width='20' height='20' alt='Russia Language' /> Russia"></option> 
               </select>
             </div>
+            <?php echo $noob; ?>
             <div class="form-group" style="float:left;">
               <button type="submit" id="loadPagenew" class="btn btn-primary" name="send_data" style="width:540px;">Start</button>
             </div>
