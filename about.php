@@ -40,9 +40,9 @@ and open the template in the editor.
   <div class="leftMenu hidden-xs hidden-sm">
     <ul>
       <li><img src="img/logo.png" alt="" /></li>
-      <li><a href="index.php">Home</a></li>
-      <li><a href="how.php">How it works ?</a></li>
-      <li><a href="about.php">About</a></li>
+          <li><a href="index.php">Home</a></li>
+          <li><a href="https://github.com/ahmedsafadii/YouCanDoIt/blob/master/README.md">How it works ?</a></li>
+          <li><a href="about.php">About</a></li>   
     </ul>
   </div>
 
@@ -64,7 +64,7 @@ and open the template in the editor.
         <ul class="nav navbar-nav">
           <li><a href="index.php">Home</a></li>
           <li><a href="https://github.com/ahmedsafadii/YouCanDoIt/blob/master/README.md">How it works ?</a></li>
-          <li><a href="about.php">About</a></li>     
+          <li><a href="about.php">About</a></li>       
         </ul>
       </div>
       <!-- /.navbar-collapse -->
