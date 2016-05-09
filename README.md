@@ -1,5 +1,7 @@
 # You Can Do It - Riot Games API Challenge 2016
 
+- By (Ahmed Safadi - SKT T1 FEED3R(EUW) & Mohammed Awad - Aza3em(EUW)
+
 ## General Information
 
 This project is an entry for the [Riot Games API Challenge 3](https://developer.riotgames.com/discussion/announcements/show/eoq3tZd1).
@@ -35,8 +37,65 @@ Webserver with
 
 ## Values & Functions
 
+Static Values
+
 | Name  |
 |---|
 | Aggressive  |
 | Balanced  |
 | Beginner  |
+
+Functions
+
+- KDA Function ( 30 Points )
+- 
+| Name  | Min  | Max  | Judge |
+| --- | --- | --- | --- |
+| Perfect | 3 | +3 | Aggressive |
+| Normal | 2 | +3 | Balanced |
+| Bad | 0 | +2 | Beginner |
+
+- Champion Grade Function ( 30 Points )
+- 
+| Name  | Min  | Max  | Judge |
+| --- | --- | --- | --- |
+| Boosted | 0 | 10 | Beginner |
+| Very Bad | 10 | 35 | Beginner |
+| Bad | 35 | 50 | Balanced |
+| Very Good | 51 | 60 | Balanced |
+| Excellent | 60 | 80 | Aggressive |
+| Perfect | 80 | +80 | Aggressive |
+
+- Top 3 Champion Mystery ( 25 Points )
+- 
+| Name  | Min  | Max  | Judge |
+| --- | --- | --- | --- |
+| Perfect | 1 | 3 | Aggressive |
+| Normal | 3 | 6 | Balanced |
+| Bad | 6 | +6 | Beginner |
+
+- Farms Function ( 5 Point )
+- 
+| Name  | Min  | Max  | Judge |
+| --- | --- | --- | --- |
+| Perfect | 180 | +180 | Aggressive |
+| Normal | 100 | 179 | Balanced |
+| Bad | 0 | 100 | Beginner |
+
+
+- Golds Function ( 5 Point )
+- 
+| Name  | Min  | Max  | Judge |
+| --- | --- | --- | --- |
+| Perfect | 10000 | +10000 | Aggressive |
+| Normal | 8000 | 10000 | Balanced |
+| Bad | 0 | 8000 | Beginner |
+
+- Turret Function ( 5 Point )
+- 
+| Name  | Min  | Max  | Judge |
+| --- | --- | --- | --- |
+| Perfect | 1.0 | +1.0 | Aggressive |
+| Normal | 0.5 | 1.0 | Balanced |
+| Bad | 0 | 0.5 | Beginner |
+
