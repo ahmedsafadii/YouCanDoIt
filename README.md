@@ -26,6 +26,7 @@ Webserver with
 ## Setup
 - Configure [connection.php](connection.php) with the username, password, database for your installation
 - Create the database with the [sql-file](sql/Riot3.sql)
+- Change the api_key from [index.php](index.php) and [show.php](show.php)
 - [OPTIONAL] You can change the expert or add new expert from the database
 - Open the [index.php](index.php) in your browser ;)
 
