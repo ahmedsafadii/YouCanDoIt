@@ -4,11 +4,20 @@ require('connection.php');
 $aggr = 0;
 $save = 0;
 $noob = 0;
+$maxvalue = 0;
+
+$_SESSION['maxrank'];
+$_SESSION['maxvalue'];
 if (isset($_SESSION['expert'])){
   if ($_GET['step'] == $_SESSION['step1']){
   $expertid = $_SESSION['expert'];
-  $selectchampions = $con->query("SELECT * FROM `experts` WHERE `expert_id` = $expertid");
+  $playerid = $_SESSION['player'];
+  $championid = $_SESSION['champion'];
+  $region = $_SESSION['region'];
+  $selectchampions = $con->query("SELECT * FROM `experts` WHERE `expert_id` = 2"); // $expertid if there's more than one expert
   $row = $selectchampions->fetch_assoc();
+    $file = file_get_contents('generetor/champion.json');
+  $generate = json_decode($file,true);
   }
   else if ($_GET['step'] == $_SESSION['step2']){
   $playerid = $_SESSION['player'];
@@ -22,7 +31,6 @@ if (isset($_SESSION['expert'])){
   $generate = json_decode($file,true);
   }
   else if ($_GET['step'] == $_SESSION['step3']){
-
   $playerid = $_SESSION['player'];
   $championid = $_SESSION['champion'];
   $region = $_SESSION['region'];
@@ -93,23 +101,23 @@ function grade_calculate($grade){
   global $noob;
 
 
-  if ($grade > 0 && $grade < 10){
+  if ($grade > 0 && $grade <= 10){
     $noob = $noob + 30;
     return "Boosted";
   }
-  else if ($grade > 10 && $grade < 35){
+  else if ($grade > 10 && $grade <= 35){
     $noob = $noob + 30;
     return "Very Bad";
   }
-  else if ($grade > 35 && $grade < 50){
+  else if ($grade > 35 && $grade <= 50){
     $save = $save + 30;
     return "Bad";
   }    
-  else if ($grade > 51 && $grade < 60){
+  else if ($grade > 50 && $grade <= 60){
     $save = $save + 30;
     return "Very Good";
   }
-  else if ($grade > 60 && $grade < 80){
+  else if ($grade > 60 && $grade <= 80){
     $aggr = $aggr + 30;
     return "Excellent";
   }
@@ -167,7 +175,7 @@ function farms_calculate($farm){
 
 function gold_calcualte($gold){
 
-    global $aggr;
+  global $aggr;
   global $save;
   global $noob;
 
@@ -201,7 +209,7 @@ function tower_calcualte($tower){
     $aggr = $aggr + 5;
     return "Perfect";
   }
-  else if ($tower > 1.0 && $tower > 0.5){
+  else if ($tower < 1.0 && $tower > 0.5){
     $save = $save + 5;
     return "Normal";
   }
@@ -242,6 +250,17 @@ function custom_number_format($number, $precision = 3, $divisors = null) {
     return number_format($number / $divisor) . $shorthand;
 }
 
+function get_max($aggr,$save,$noob){
+
+
+  global $maxvalue;
+
+  $myarray = [$aggr,$save,$noob];
+  $maxvaluex = max($myarray);
+  $maxvalue = max($myarray);
+  return $maxvaluex;
+ 
+ }
 
 function rank_calcualte($rank){
 
@@ -264,13 +283,9 @@ function rank_calcualte($rank){
 
   $typeofrank = array("Aggressive"=>$aggr,"Balanced"=>$save,"Beginner"=>$noob);
 
-
-
   $key = array_search(max($typeofrank), $typeofrank);
-
   return $key;
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -317,9 +332,9 @@ and open the template in the editor.
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Expert Players</a></li>
-          <li><a href="#">About</a></li>      
+          <li><a href="index.php">Home</a></li>
+          <li><a href="https://github.com/ahmedsafadii/YouCanDoIt/blob/master/README.md">How it works ?</a></li>
+          <li><a href="about.php">About</a></li>      
         </ul>
       </div>
       <!-- /.navbar-collapse -->
@@ -341,7 +356,7 @@ and open the template in the editor.
         ?>
     <div class="row">
       <div class="selectBox">
-       <div class="boxSelect2" id="mydiv">
+       <div class="boxSelect2">
          <div class="chmapionbh" style="background-image: url('http://ddragon.leagueoflegends.com/cdn/img/champion/splash/<?php echo $chmapionname; ?>_0.jpg');">
            <div class="summonerPhoto"><img style="border-radius:5px;" src="img/profileicon/<?php echo $_SESSION['profileIconId']; ?>.png" alt="" width="85" height="85" /></div>
            <div class="summonerName"><?php echo $_SESSION['name']; ?></div>
@@ -351,28 +366,36 @@ and open the template in the editor.
          <div class="clear"></div>
          <?php
          if ($_GET['step'] == $_SESSION['step3']){
+
+           $winrate = intval(($rowST['match_win'] / $rowST['match_played']) * 100);
+        $killpermatch = intval(($rowST['match_kills'] + $rowST['match_assist'] ) / $rowST['match_death']);
+        $kdamatch = intval($rowST['match_kills']/$rowST['match_played']).":".intval($rowST['match_death']/$rowST['match_played']).":".intval($rowST['match_assist']/$rowST['match_played']);
+        
+
          ?>
-         <div class="bannar" style="background-image: url('../img/exportme.png'),url('http://ddragon.leagueoflegends.com/cdn/img/champion/splash/<?php echo $chmapionname; ?>_0.jpg'">
-            <div class="ranknumber">1</div>
-            <div class="summonername">test</div>
-            <div class="summonerserver">test</div>
-            <div class="sumoonerpoints">test</div>
-            <div class="summonertypejugne">test</div>
-            <div class="summonertypejugnenumber">test</div>
-            <div class="championlevel">12</div>
-            <div class="championgrade">A+</div>
-            <div class="playedmatch">21</div>
-            <div class="playedmatch">21</div>
-            <div class="playedmatch">21</div>
-            <div class="playedmatch">21</div>
-            <div class="playedmatch">21</div>
-            <div class="playedmatch">21</div>
-            <div class="playedmatch">21</div>
-            <div class="playedmatch">21</div>
-            <div class="playedmatch">21</div>
-            <div class="playedmatch">21</div>
-            <div class="playedmatch">21</div>
-            <div class="playedmatch">21</div>
+         <div class="bannar" id="mydiv" style="background-image: url('img/exportme.png'),url('img/splash/<?php echo $chmapionname; ?>_1.jpg'">
+            <div class="ranknumber"><?php echo $rowS['champion_rank']; ?></div>
+            <div class="sumoonerpoints"><?php echo custom_number_format($rowS['champion_points']); ?></div>
+             <div class="summonerPphoho"><img style="border-radius:5px;" src="img/profileicon/<?php echo $_SESSION['profileIconId']; ?>.png" alt="" width="50" height="50" /></div>
+            <div class="chmpstat"><b><?php echo $chmapionname; ?></b> - Champion stats</div>
+            <div class="summonernamexxxxx"><?php echo $_SESSION['name']; ?></div>
+            <div class="summonerserverxx"><?php echo $_SESSION['rank']; ?></div>
+            <div class="summonertypejugne"><?php echo $_SESSION['maxrank']; ?></div>
+            <div class="summonertypejugnenumber"><?php echo $_SESSION['maxvalue']; ?>%</div>
+            <div class="championlevel"><?php echo $rowS['champion_level']; ?></div>
+            <div class="championgrade"><?php echo $rowS['champion_grade']; ?></div>
+            <div class="playedmatch"><?php echo $rowST['match_played']; ?></div>
+            <div class="win"><?php echo $rowST['match_win']; ?></div>
+            <div class="lost"><?php echo $rowST['match_lose']; ?></div>
+            <div class="winrate"><?php echo  $winrate; ?>%</div>
+            <div class="kda"><?php echo $kdamatch; ?> | <?php echo $killpermatch; ?>:1</div>
+            <div class="farms"><?php echo custom_number_format($rowST['match_farms']); ?></div>
+            <div class="golds"><?php echo custom_number_format($rowST['match_gold']); ?></div>
+            <div class="tower"><?php echo $rowST['match_turret']; ?></div>
+            <div class="penta"><?php echo $rowST['match_pkill']; ?></div>
+            <div class="qudra"><?php echo $rowST['match_qkill']; ?></div>
+            <div class="triple"><?php echo $rowST['match_tkill']; ?></div>
+            <div class="double"><?php echo $rowST['match_dkill']; ?></div>
          </div>
          <?php } ?>  
 
@@ -381,8 +404,8 @@ and open the template in the editor.
           ?>
           <div class="typeWidth">
          <span id="typed" class="stringstyles"></span>
-         <div id="typed-strings">
-        <p>Welcome to <span style="color:#aa0000">You Can Do It App </span> - The Summoner Champion Analytic ... <br /><br />My name's <span style="color: #317daf;"><?php echo $row['expert_name']; ?></span>, I live in <span style="color: #317daf;"><?php echo $row['expert_country']; ?> </span> , I play league of legends game for  <span style="color: #317daf;"><?php echo $row['expert_years']; ?> Seasons </span> , I play in <span style="color: #317daf;"><?php echo $row['expert_server']; ?> </span> Region with summoner account <span style="color: #317daf;"><?php echo $row['expert_summoner']; ?> </span> My Current Rank in game is <span style="color: #317daf;"><?php echo $row['expert_rank']; ?> </span> and my rank was in last season  <span style="color: #317daf;"><?php echo $row['expert_lastseason']; ?> </span> , I Prefer to play as <span style="color: #317daf;"><?php echo $row['expert_lane']; ?> </span> , My main champion is <span style="color: #317daf;"><?php echo $row['expert_champion']; ?> </span> .... <br /><br /><br /><span style="font-size:25px;">Today</span>, I will be your trainer and i hope you can use my tips wisely ... <br />please don't forget to rate me at the end of Analytic.... <br /><br /><br /> Good Luck.</p>
+         <div id="typed-strings" style="display:none;">
+        <p>Welcome to <span style="color:#aa0000">You Can Do It App </span> - The Summoner Champion Analytic ... <br /><br />My name's <span style="color: #317daf;"><?php echo $row['expert_name']; ?></span>, I live in <span style="color: #317daf;"><?php echo $row['expert_country']; ?> </span> , I play league of legends game for  <span style="color: #317daf;"><?php echo $row['expert_years']; ?> Seasons </span> , I play in <span style="color: #317daf;"><?php echo $row['expert_server']; ?> </span> Region with summoner account <span style="color: #317daf;"><?php echo $row['expert_summoner']; ?> </span> My Current Rank in game is <span style="color: #317daf;"><?php echo $row['expert_rank']; ?> </span> and my rank was in last season  <span style="color: #317daf;"><?php echo $row['expert_lastseason']; ?> </span> , I Prefer to play as <span style="color: #317daf;"><?php echo $row['expert_lane']; ?> </span> , My main champion is <span style="color: #317daf;"><?php echo $row['expert_champion']; ?> </span> .... <br /><br /><br /><span style="font-size:25px;">Today</span>, I will be your trainer and i hope you can use my tips wisely ...  <br /><br /><br /> Good Luck.</p>
                  </div>
         <span id="typed"></span>
          <?php }
@@ -394,7 +417,7 @@ and open the template in the editor.
         $golds = intval($rowST['match_gold'] / $rowST['match_played']);
         $tower = round($rowST['match_turret']/$rowST['match_played'], 2);
          ?>
-                  <div class="typeWidth">
+         <div class="typeWidth">
          <span id="typed" class="stringstyles"></span>
          <div id="typed-strings">
         <p>Let's talk about <span style="color: #317daf;"><?php echo $chmapionname; ?></span> statistics. The rank of this champion is the <span style="color: #317daf;"><?php echo ordinal($rowS['champion_rank']); ?></span> and he has reached the <span style="color: #317daf;"><?php  echo ordinal($rowS['champion_level']); ?></span> level, <?php if ($rowS['champion_grade'] == ""){ echo "he didn't achieved highest grade"; }else{echo "his highest grade is";} ?> <span style="color: #317daf;"><?php echo $rowS['champion_grade']; ?></span> , last time he played with <span style="color: #317daf;"><?php echo $chmapionname; ?></span> was <span style="color: #317daf;"><?php echo time_elapsed_string(substr($rowS['champion_last_played'], 0, -3)); ?></span>. <br /><br />
@@ -426,7 +449,13 @@ and open the template in the editor.
 
 
 
-        <span style="font-size: 40px; color: #aa0000; margin-left: 28%;"><?php echo rank_calcualte($rowS['champion_rank']); ?></span><br /><br />
+        <span style="font-size: 40px; color: #aa0000; margin-left: 28%;"><?php
+
+        $_SESSION['maxrank'] = rank_calcualte($rowS['champion_rank']);
+        echo $_SESSION['maxrank'];
+        get_max($aggr,$noob,$save);
+        $_SESSION['maxvalue'] =  $maxvalue;
+        ?></span><br /><br />
 
         This is my opinion as an expert player , but just remember that the numbers doesn't prove a thing.
         </p>
@@ -438,13 +467,20 @@ and open the template in the editor.
          <?php 
          if ($_GET['step'] == $_SESSION['step1']){
           ?>
-         <div class="buttonNext" style="display:hidden;" id="btnContinue"><a href="show.php?step=<?php echo $_SESSION['step2']; ?>"> Next </a></div>
+         <a href="show.php?step=<?php echo $_SESSION['step2']; ?>"><div class="buttonNext" style="display:hidden;" id="btnContinue"> Next </div> </a>
          <?php }
          else if ($_GET['step'] == $_SESSION['step2']){
          ?>
-         <div class="buttonNext" style="display:hidden;" id="btnContinue"><a href="show.php?step=<?php echo $_SESSION['step3']; ?>"> Next </a></div>
+         <a href="show.php?step=<?php echo $_SESSION['step3']; ?>"><div class="buttonNext" style="display:hidden;" id="btnContinue"> Next </div></a>
          <?php 
        }
+       else if ($_GET['step'] == $_SESSION['step3']){
+        ?>
+         <a href="#"><div class="buttonNext" style="display:hidden;" id="save_image_locally"> Save Stats AS Picture</div></a>
+         <div class="buttonNext" style="display:hidden;" ><a href="index.php?newsearch=_<?php echo $_SESSION['step3']; ?>"> Try Again ?</div></a>
+
+        <?php 
+        }
        ?>
 
 
@@ -494,7 +530,7 @@ else if (nextstep.toString() == currentstep){
   $(function(){
     $("#typed").typed({
       stringsElement: $('#typed-strings'),
-      typeSpeed: 1 // 50
+      typeSpeed: 10
     });
   });
 </script>
@@ -538,7 +574,24 @@ $("#typed").each(function(){
 
     </script>
 
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  $('#save_image_locally').click(function(){
+        html2canvas([document.getElementById('mydiv')],
+        {
+          onrendered: function (canvas) {
+            var a = $("<a>").attr("href", canvas.toDataURL('image/png'))
+            .attr("download", "output.png")
+            .appendTo("body");
+            a[0].click();
+            a.remove();
+          }
+        });
+  });
+});
 
+  </script>
 </body>
-
-
