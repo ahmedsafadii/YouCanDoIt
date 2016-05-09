@@ -2,6 +2,9 @@
 
 - By (Ahmed Safadi - SKT T1 FEED3R(EUW) & Mohammed Awad - Aza3em(EUW)
 
+![alt tag](http://i.imgur.com/EvQDphB.png)
+
+
 ## General Information
 
 This project is an entry for the [Riot Games API Challenge 3](https://developer.riotgames.com/discussion/announcements/show/eoq3tZd1).
@@ -33,8 +36,8 @@ Webserver with
 
 ## How You Can Judge Me !?
 - First from the previous projects [AP Arena](https://github.com/TiFu/RiotGamesAPIChallenge2) and [URF Match overview/statistics ](https://github.com/SkilledGod/URFMatchOverview)
-- i saved alot of good average that help me today to generate function to judge if you are good or bad.
-
+- I saved alot of good average that help me today to generate function to judge if you are good or bad.
+- You have to be ranked player and u play more than 10 match in the selected champion
 ## Values & Functions
 
 Static Values
