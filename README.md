@@ -103,4 +103,4 @@ Functions
 | Normal | 0.5 | 1.0 | Balanced |
 | Bad | 0 | 0.5 | Beginner |
 
-# Remember That The Tumbers Doesn't Prove A Thing. | 
+# The Numbers Doesn't Prove A Thing.
