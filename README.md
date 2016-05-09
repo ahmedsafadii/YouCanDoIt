@@ -30,7 +30,6 @@ Webserver with
 - Ajax & Jquery
 
 ## How You Can Judge Me !?
-
 - First from the previous projects [AP Arena](https://github.com/TiFu/RiotGamesAPIChallenge2) and [URF Match overview/statistics ](https://github.com/SkilledGod/URFMatchOverview) i saved alot of good average that help me today to generate function to judge if you are good or bad.
 - 
 | Name  |
