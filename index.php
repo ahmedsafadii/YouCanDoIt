@@ -59,9 +59,9 @@ and open the template in the editor.
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Expert Players</a></li>
-          <li><a href="#">About</a></li>      
+          <li><a href="index.php">Home</a></li>
+          <li><a href="https://github.com/ahmedsafadii/YouCanDoIt/blob/master/README.md">How it works ?</a></li>
+          <li><a href="about.php">About</a></li>       
         </ul>
       </div>
       <!-- /.navbar-collapse -->
